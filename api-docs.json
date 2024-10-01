@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Title",
-    "description": "Title",
+    "title": "SiPremanWolu API Docs",
+    "description": "API Specs Documentation for SiPremanWolu Backend Service",
     "version": "1.0.0"
   },
   "servers": [
@@ -30,7 +30,7 @@
                   },
                   "password": {
                     "type": "string",
-                    "minLength": 8
+                    "minLength": "8"
                   }
                 }
               }
@@ -46,22 +46,286 @@
                   "type": "object",
                   "properties": {
                     "status": {
-                      "type": "boolean"
-                    },
-                    "code": {
-                      "type": "number"
+                      "type": "integer"
                     },
                     "message": {
                       "type": "string"
                     },
                     "data": {
-                      "type": "string",
-                      "default": "tba"
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success Login",
+                  "data": {
+                    "token": "some-token",
+                    "user": {
+                      "id": 1,
+                      "name": "Akmal Muhammad Pridianto",
+                      "username": "10520",
+                      "role_id": 1,
+                      "role_name": "Student"
                     }
                   }
                 }
               }
             }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 400,
+                  "message": "Bad Request",
+                  "data": null,
+                  "errors": {
+                    "username": [
+                      "1",
+                      "2"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Invalid Credentials",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "for get user",
+        "description": "Get User",
+        "responses": {
+          "200": {
+            "description": "Success Get User",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success Login",
+                  "data": {
+                    "user": {
+                      "id": 1,
+                      "name": "Akmal Muhammad Pridianto",
+                      "username": "10520",
+                      "role_id": 1,
+                      "role_name": "Student"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "for Logout",
+        "description": "Logout",
+        "responses": {
+          "200": {
+            "description": "Success Logout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success Logout",
+                  "data": true,
+                  "errors": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "role_id": {
+            "type": "number"
+          },
+          "role_name": {
+            "type": "string"
           }
         }
       }
