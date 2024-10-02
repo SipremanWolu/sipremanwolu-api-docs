@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/auth/login": {
+    "/auth/users": {
       "post": {
         "tags": [
           "Authentication"
@@ -29,8 +29,7 @@
                     "type": "string"
                   },
                   "password": {
-                    "type": "string",
-                    "minLength": "8"
+                    "type": "string"
                   }
                 }
               }
@@ -150,15 +149,20 @@
             }
           }
         }
-      }
-    },
-    "/auth/me": {
+      },
       "get": {
         "tags": [
           "Authentication"
         ],
         "summary": "for get user",
         "description": "Get User",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success Get User",
@@ -233,15 +237,20 @@
             }
           }
         }
-      }
-    },
-    "/auth/logout": {
+      },
       "delete": {
         "tags": [
           "Authentication"
         ],
         "summary": "for Logout",
         "description": "Logout",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success Logout",
@@ -257,7 +266,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "object"
+                      "type": "boolean"
                     },
                     "errors": {
                       "type": "null"
@@ -303,6 +312,477 @@
               }
             }
           }
+        }
+      }
+    },
+    "/attandences/school": {
+      "get": {
+        "tags": [
+          "Attendance School"
+        ],
+        "summary": "user attandences",
+        "description": "Get all user's attendances",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get user's attendance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "user_id": {
+                            "type": "number"
+                          },
+                          "date": {
+                            "type": "string"
+                          },
+                          "image_url": {
+                            "type": "string"
+                          },
+                          "attendances": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "status": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                },
+                                "created_at": {
+                                  "type": "string"
+                                },
+                                "updated_at": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success Get All User's Attendances",
+                  "data": [
+                    {
+                      "id": 1,
+                      "user_id": 1,
+                      "date": "10-10-2024",
+                      "image_url": "https://some-url.com/image.webp",
+                      "attendances": [
+                        {
+                          "type": 0,
+                          "type_text": "Clock In",
+                          "status": 2,
+                          "status_text": "Hadir"
+                        },
+                        {
+                          "type": 1,
+                          "type_text": "Clock Out",
+                          "status": 1,
+                          "status_text": "Terlambat"
+                        }
+                      ]
+                    }
+                  ],
+                  "errors": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Attendance School"
+        ],
+        "description": "Add new attendance",
+        "summary": "Add new attendance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ],
+                    "description": "Clock in / Clock Out"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success add new attendance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "boolean"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success add new attendance",
+                  "data": true,
+                  "errors": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": 400,
+                    "message": "Validation Error",
+                    "data": null,
+                    "errors": {
+                      "image": [
+                        "Image field must be less than 2MB",
+                        "Image must be JPG, PNG, and WEBP"
+                      ],
+                      "type": [
+                        "Type field is required"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/permissions/students":    {
+      "get": {
+        "tags": [
+          "Student Permission"
+        ],
+        "description": "Get All Use's Permissions",
+        "summary": "get user permission",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "user_id": {
+                            "type": "number"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "type": {
+                            "type": "number"
+                          },
+                          "type_text": {
+                            "type": "string"
+                          },
+                          "selected_lecture": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "nullable": true,
+                              "description": "null if 'type' is 'full day''",
+                              "properties": {
+                                "schedule_id": {
+                                  "type": "number"
+                                },
+                                "schedule_name": {
+                                  "type": "string"
+                                },
+                                "schedule_shortname": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "status": {
+                            "type": "number"
+                          },
+                          "status_text": {
+                            "type": "string"
+                          },
+                          "category": {
+                            "type": "number"
+                          },
+                          "category_text": {
+                            "type": "string"
+                          },
+                          "reason": {
+                            "type": "string"
+                          },
+                          "image_url": {
+                            "type": "string"
+                          },
+                          "rejected_reason": {
+                            "type": "string",
+                            "nullable": true,
+                            "description": "only if 'status' is 'rejected'"
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success get user permission",
+                  "data": [
+                    {
+
+                    }
+                  ],
+                  "errors": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Student Permission"
+        ],
+        "description": "Add new student permission",
+        "summary": "Add new student permission",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "description": "possible value 'full day' (0); 'half day' (1)",
+                    "type": "number"
+                  },
+                  "category": {
+                    "type": "number",
+                    "description": "possible value 'sick' (0); 'dispensasi' (1)"
+                  },
+                  "selected_lecture": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "schedule_id": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+
         }
       }
     }
