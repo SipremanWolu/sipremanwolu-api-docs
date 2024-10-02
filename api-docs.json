@@ -160,7 +160,15 @@
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Bearer Token"
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -248,7 +256,15 @@
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Bearer Token"
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -326,7 +342,15 @@
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Bearer Token"
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -456,6 +480,21 @@
         ],
         "description": "Add new attendance",
         "summary": "Add new attendance",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -599,7 +638,15 @@
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Bearer Token"
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -742,7 +789,15 @@
           {
             "name": "Authorization",
             "in": "header",
-            "description": "Bearer Token"
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
           }
         ],
         "requestBody": {
@@ -782,7 +837,111 @@
           }
         },
         "responses": {
-
+          "200": {
+            "description": "Success add new student permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "boolean"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 201,
+                  "message": "Success add student permission",
+                  "data": true,
+                  "errors": null
+                }
+              }
+            }
+          },
+          "400":  {
+            "description": "Validation Error | Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "field": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "status": 400,
+                  "message": "Validation Error",
+                  "data": null,
+                  "errors": {
+                    "reason": [
+                      "This reason field is required"
+                    ],
+                    "image": [
+                      "This image field is required"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "example": {
+                  "status": 401,
+                  "message": "Unauthorized",
+                  "data": null,
+                  "errors": null
+                }
+              }
+            }
+          }
         }
       }
     }
