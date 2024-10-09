@@ -331,7 +331,7 @@
         }
       }
     },
-    "/attandences/school": {
+    "/attendances/school": {
       "get": {
         "tags": [
           "Attendance School"
@@ -627,7 +627,103 @@
         }
       }
     },
-    "/permissions/students":    {
+    "/attendances/schhol/availability": {
+      "post": {
+        "tags": [
+          "Attendance School"
+        ],
+        "description": "check attendance availability",
+        "summary": "check availability",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "number",
+                    "enum": [
+                      0,
+                      1
+                    ],
+                    "description": "Clock in / Clock Out"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success check attendance availability",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "null"
+                    },
+                    "errors": {
+                      "type": "null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/permissions/students": {
       "get": {
         "tags": [
           "Student Permission"
@@ -739,7 +835,6 @@
                   "message": "Success get user permission",
                   "data": [
                     {
-
                     }
                   ],
                   "errors": null
@@ -867,7 +962,7 @@
               }
             }
           },
-          "400":  {
+          "400": {
             "description": "Validation Error | Bad Request",
             "content": {
               "application/json": {
