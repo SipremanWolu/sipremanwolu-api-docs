@@ -834,8 +834,7 @@
                   "status": 200,
                   "message": "Success get user permission",
                   "data": [
-                    {
-                    }
+                    {}
                   ],
                   "errors": null
                 }
@@ -1097,6 +1096,109 @@
                       "default": null
                     }
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/class/schedule": {
+      "get": {
+        "tags": [
+          "Class Schedule"
+        ],
+        "description": "Get class schedule for current date",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "default": "Bearer some-token"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "day": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "short_name": {
+                            "type": "string"
+                          },
+                          "start": {
+                            "type": "string"
+                          },
+                          "end": {
+                            "type": "string"
+                          },
+                          "teacher_name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "errors": {
+                      "type": "null",
+                      "default": null
+                    }
+                  }
+                },
+                "example": {
+                  "status": 200,
+                  "message": "Success",
+                  "data": [
+                    {
+                      "day": "2024-10-10",
+                      "name": "Pendidikan Pancasila",
+                      "short_name": "PPS",
+                      "start": "2024-10-10T07:00:00.000Z",
+                      "end": "2024-10-10T10:00:59.999Z",
+                      "teacher_name": "Dr. Ahmad"
+                    },
+                    {
+                      "day": "2024-10-10",
+                      "name": "Matematika",
+                      "short_name": "MTK",
+                      "start": "2024-10-10T10:00:00.000Z",
+                      "end": "2024-10-10T13:00:59.999Z",
+                      "teacher_name": "Siti Aminah"
+                    },
+                    {
+                      "day": "2024-10-10",
+                      "name": "Dasar Pengembangan Perangkat Lunak dan Gim",
+                      "short_name": "DPPLG",
+                      "start": "2024-10-10T13:00:00.000Z",
+                      "end": "2024-10-10T15:30:59.999Z",
+                      "teacher_name": "Yanto Gaming"
+                    }
+                  ]
                 }
               }
             }
